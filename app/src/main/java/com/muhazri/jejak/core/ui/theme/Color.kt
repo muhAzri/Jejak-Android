@@ -1,4 +1,4 @@
-package com.muhazri.jejak.ui.theme
+package com.muhazri.jejak.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
