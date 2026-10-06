@@ -1,6 +1,9 @@
 package com.muhazri.jejak.features.home.domain.entities
 
+import kotlinx.serialization.Serializable
+
 /** One recorded location along a session's route. */
+@Serializable
 data class RoutePoint(
     val latitude: Double,
     val longitude: Double,

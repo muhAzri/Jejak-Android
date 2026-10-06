@@ -1,8 +1,10 @@
 package com.muhazri.jejak.features.home.domain.entities
 
 import java.util.UUID
+import kotlinx.serialization.Serializable
 
 /** A saved session, as shown on Home and stored on the device. All instants are epoch milliseconds. */
+@Serializable
 data class SessionSummary(
     val activity: ActivityType,
     val startDate: Long,
