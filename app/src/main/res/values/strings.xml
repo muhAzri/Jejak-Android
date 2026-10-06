@@ -5,4 +5,109 @@
     <string name="counter_increment">Tambah</string>
     <string name="counter_reset">Atur ulang</string>
     <string name="counter_reset_message">Penghitung berhasil diatur ulang</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_skip">Skip</string>
+    <string name="onboarding_continue">Continue</string>
+    <string name="onboarding_page_indicator">Page %1$d of %2$d</string>
+    <string name="onboarding_intro_title">Every Step, Recorded</string>
+    <string name="onboarding_intro_message">Record your runs and walks — distance, time and pace, right on your phone.</string>
+    <string name="onboarding_privacy_title">Your Data Stays Here</string>
+    <string name="onboarding_privacy_message">Jejak has no server. Every session lives on your device.</string>
+    <string name="onboarding_privacy_no_account">No account, no sign-up</string>
+    <string name="onboarding_privacy_offline">Works fully offline</string>
+    <string name="onboarding_privacy_on_device">Stored only on this phone</string>
+    <string name="onboarding_location_title">Allow Location</string>
+    <string name="onboarding_location_message">Location is used to draw your route and measure distance. It never leaves your phone.</string>
+    <string name="onboarding_location_hint">Choose “While using the app” in the next dialog.</string>
+    <string name="onboarding_location_allow">Allow Location</string>
+    <string name="onboarding_location_later">Not Now</string>
+
+    <!-- Home -->
+    <string name="home_settings">Settings</string>
+    <string name="home_last_session">Last Session</string>
+    <string name="home_empty_title">No Sessions Yet</string>
+    <string name="home_empty_message">Your first session will show up here once saved.</string>
+    <string name="home_session_today">Today · %1$s</string>
+    <string name="home_session_yesterday">Yesterday · %1$s</string>
+    <string name="home_session_date">%1$s · %2$s</string>
+
+    <!-- Location notices -->
+    <string name="notice_denied_title">Location Access Off</string>
+    <string name="notice_denied_message">Without location, Jejak can\'t record your route or distance. Turn it on in Android Settings.</string>
+    <string name="notice_open_settings">Open Settings</string>
+    <string name="notice_once_title">Location Allowed Once</string>
+    <string name="notice_once_message">You\'ll be asked again every session. Choose “While using the app” to skip this.</string>
+    <string name="notice_once_change">Change in Settings</string>
+    <string name="notice_dismiss">Dismiss</string>
+    <string name="notice_not_requested_title">Location Not Allowed Yet</string>
+    <string name="notice_not_requested_message">Jejak needs location to draw your route and measure distance.</string>
+    <string name="notice_allow_location">Allow Location</string>
+
+    <!-- Activities -->
+    <string name="activity_run">Run</string>
+    <string name="activity_walk">Walk</string>
+    <string name="activity_start_run">Start Run</string>
+    <string name="activity_start_walk">Start Walk</string>
+    <string name="activity_run_complete">Run Complete</string>
+    <string name="activity_walk_complete">Walk Complete</string>
+
+    <!-- Session metrics -->
+    <string name="metric_distance">Distance</string>
+    <string name="metric_time">Time</string>
+    <string name="metric_current_pace">Current Pace</string>
+    <string name="metric_avg_pace">Avg Pace</string>
+    <string name="metric_best_pace">Best Pace</string>
+    <string name="metric_pace_note">Pace in minutes /%1$s</string>
+    <string name="metric_weak_signal_note">Route is estimated for now (dotted line). Current pace is hidden until the signal recovers.</string>
+    <string name="pace_legend_slow">Slow %1$s</string>
+    <string name="pace_legend_fast">Fast %1$s</string>
+
+    <!-- Session chips and controls -->
+    <string name="chip_locked">Locked</string>
+    <string name="chip_gps">GPS</string>
+    <string name="chip_weak_signal">Weak signal</string>
+    <string name="session_paused">Paused · %1$s</string>
+    <string name="control_lock">Lock</string>
+    <string name="control_pause">Pause</string>
+    <string name="control_resume">Resume</string>
+    <string name="control_finish">Finish</string>
+    <string name="control_hold_to_finish">Hold to finish</string>
+    <string name="control_hold_to_unlock">Hold to unlock</string>
+    <string name="gps_card_title">Finding GPS Signal</string>
+    <string name="gps_card_message">Wait a moment in the open for an accurate route. You can also start now.</string>
+    <string name="gps_card_cancel">Cancel</string>
+    <string name="gps_card_start_anyway">Start Anyway</string>
+
+    <!-- Session summary and detail -->
+    <string name="session_save">Save</string>
+    <string name="session_discard">Discard</string>
+    <string name="session_cancel">Cancel</string>
+    <string name="session_delete">Delete</string>
+    <string name="session_delete_button">Delete Session</string>
+    <string name="session_too_short_title">Session Too Short</string>
+    <string name="session_too_short_message">Sessions under 100 m or 1 minute can\'t be saved. Keep going or discard?</string>
+    <string name="session_keep_going">Keep Going</string>
+    <string name="session_discard_title">Discard This Session?</string>
+    <string name="session_delete_title">Delete This Session?</string>
+    <string name="session_destroy_message">The route and all metrics will be permanently deleted.</string>
+    <string name="session_time_range">%1$s · %2$s–%3$s</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_back">Back</string>
+    <string name="settings_units_section">Distance Units</string>
+    <string name="settings_kilometers">Kilometers (km)</string>
+    <string name="settings_miles">Miles (mi)</string>
+    <string name="settings_general_section">General</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_location_access">Location Access</string>
+    <string name="settings_about_section">About</string>
+    <string name="settings_version">Version</string>
+    <string name="settings_about_note">All data is stored on this phone. Uninstalling the app deletes every session.</string>
+    <string name="permission_while_using">While Using</string>
+    <string name="permission_always">Always</string>
+    <string name="permission_once">Once</string>
+    <string name="permission_off">Off</string>
+    <string name="permission_not_set">Not Set</string>
 </resources>
