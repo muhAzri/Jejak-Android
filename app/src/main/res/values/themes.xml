@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Jejak" parent="android:Theme.Material.Light.NoActionBar" />
+    <!--
+      Only the launch window: Compose draws everything else. The dark variant lives in values-night,
+      so the pre-composition frame is already the right surface instead of flashing white.
+    -->
+    <style name="Theme.Jejak" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/jejak_surface</item>
+    </style>
 </resources>
