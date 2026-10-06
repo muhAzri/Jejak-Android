@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -34,7 +35,6 @@ import com.muhazri.jejak.features.session.presentation.components.StaticRouteMap
 import com.muhazri.jejak.features.settings.domain.entities.DistanceUnit
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 /** Shown under "Last Session" before anything has been saved. */
 @Composable
@@ -148,7 +148,7 @@ fun LastSessionRow(
 /** "Today · 06.12", "Yesterday · 6:12 AM", or the date for older sessions. */
 @Composable
 private fun sessionDateLabel(millis: Long): String {
-    val locale = Locale.getDefault()
+    val locale = LocalResources.current.configuration.locales[0]
     val time = SimpleDateFormat.getTimeInstance(java.text.DateFormat.SHORT, locale).format(Date(millis))
     return when {
         SessionFormat.isToday(millis) -> stringResource(R.string.home_session_today, time)

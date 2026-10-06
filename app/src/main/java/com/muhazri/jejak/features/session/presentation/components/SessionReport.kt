@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.Dp
@@ -35,7 +36,6 @@ import com.muhazri.jejak.features.session.domain.entities.RoutePace
 import com.muhazri.jejak.features.settings.domain.entities.DistanceUnit
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 /**
  * Activity chip, "Run Complete" and the start-end time; shared by the summary and a saved session's
@@ -58,7 +58,7 @@ fun SessionHeading(
             color = colors.textPrimary,
         )
         if (startDate != null && endDate != null) {
-            val locale = Locale.getDefault()
+            val locale = LocalResources.current.configuration.locales[0]
             val day = SimpleDateFormat("EEE, MMM d", locale).format(Date(startDate))
             val time = SimpleDateFormat.getTimeInstance(java.text.DateFormat.SHORT, locale)
             Text(
