@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -125,16 +126,18 @@ fun LocationAllowedOnceNotice(
             }
         }
 
-        // Keeps the glyph where the design puts it while giving it a 44dp target.
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .padding((-12).dp)
-                .size(44.dp)
-                .pressable(interaction, onClick = onDismiss)
-                .semantics { contentDescription = dismissLabel },
-        ) {
-            HeroIconImage(HeroIcon.XMark, 20.dp, colors.textSecondary)
+        // Keeps the glyph where the design puts it while giving it a 44dp target: the row only
+        // reserves the glyph's 20dp, and requiredSize lets the tappable box overflow around it.
+        Box(Modifier.size(20.dp), contentAlignment = Alignment.Center) {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .requiredSize(44.dp)
+                    .pressable(interaction, onClick = onDismiss)
+                    .semantics { contentDescription = dismissLabel },
+            ) {
+                HeroIconImage(HeroIcon.XMark, 20.dp, colors.textSecondary)
+            }
         }
     }
 }
