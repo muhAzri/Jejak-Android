@@ -93,6 +93,9 @@
     <string name="session_destroy_message">The route and all metrics will be permanently deleted.</string>
     <string name="session_time_range">%1$s · %2$s–%3$s</string>
 
+    <!-- Maps -->
+    <string name="map_attribution">© OpenStreetMap</string>
+
     <!-- Settings -->
     <string name="settings_title">Settings</string>
     <string name="settings_back">Back</string>
@@ -105,6 +108,7 @@
     <string name="settings_about_section">About</string>
     <string name="settings_version">Version</string>
     <string name="settings_about_note">All data is stored on this phone. Uninstalling the app deletes every session.</string>
+    <string name="settings_map_credit">Maps © OpenStreetMap contributors.</string>
     <string name="permission_while_using">While Using</string>
     <string name="permission_always">Always</string>
     <string name="permission_once">Once</string>

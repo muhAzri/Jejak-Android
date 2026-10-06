@@ -65,6 +65,9 @@ dependencies {
     implementation(libs.androidx.hilt.lifecycle.viewmodel.compose)
     ksp(libs.hilt.compiler)
 
+    // Maps (OpenStreetMap raster tiles, no API key)
+    implementation(libs.osmdroid.android)
+
     // Async
     implementation(libs.kotlinx.coroutines.android)
 
