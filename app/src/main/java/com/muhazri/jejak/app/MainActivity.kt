@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.muhazri.jejak.app.navigation.JejakNavHost
-import com.muhazri.jejak.core.ui.theme.JejakTheme
+import com.muhazri.jejak.core.designsystem.JejakTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
