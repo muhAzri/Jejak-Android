@@ -27,6 +27,29 @@ fun rememberOpenAppSettings(): () -> Unit {
 }
 
 /**
+ * Opens the per-app language picker, which Android 13+ offers for an app that declares a
+ * `localeConfig`. Older releases have no per-app language, so they land on the app's settings page.
+ */
+@Composable
+fun rememberOpenLanguageSettings(): () -> Unit {
+    val context = LocalContext.current
+    val openAppSettings = rememberOpenAppSettings()
+    return remember(context, openAppSettings) {
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                val intent = Intent(
+                    Settings.ACTION_APP_LOCALE_SETTINGS,
+                    Uri.fromParts("package", context.packageName, null),
+                ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                runCatching { context.startActivity(intent) }.onFailure { openAppSettings() }
+            } else {
+                openAppSettings()
+            }
+        }
+    }
+}
+
+/**
  * The system location dialog. Both the precise and the coarse permission are asked for together, so
  * a user who picks "Approximate" still gets a (rougher) route rather than nothing at all.
  *

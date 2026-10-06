@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Jejak</string>
+    <string name="app_name" translatable="false">Jejak</string>
 
     <!-- Onboarding -->
     <string name="onboarding_skip">Skip</string>
@@ -89,7 +89,7 @@
     <string name="session_time_range">%1$s · %2$s–%3$s</string>
 
     <!-- Maps -->
-    <string name="map_attribution">© OpenStreetMap</string>
+    <string name="map_attribution" translatable="false">© OpenStreetMap</string>
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>

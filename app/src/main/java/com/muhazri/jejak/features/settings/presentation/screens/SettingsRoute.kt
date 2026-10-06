@@ -9,6 +9,7 @@ import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.muhazri.jejak.core.system.rememberLocationPermissionRequest
 import com.muhazri.jejak.core.system.rememberOpenAppSettings
+import com.muhazri.jejak.core.system.rememberOpenLanguageSettings
 import com.muhazri.jejak.features.settings.presentation.viewmodels.SettingsViewModel
 import kotlinx.coroutines.flow.collectLatest
 
@@ -21,6 +22,7 @@ fun SettingsRoute(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val openAppSettings = rememberOpenAppSettings()
+    val openLanguageSettings = rememberOpenLanguageSettings()
     val requestPermission = rememberLocationPermissionRequest(viewModel::onPermissionResult)
 
     LifecycleResumeEffect(viewModel) {
@@ -41,6 +43,7 @@ fun SettingsRoute(
         unit = state.unit,
         onSelectUnit = viewModel::select,
         onOpenSystemSettings = openAppSettings,
+        onOpenLanguageSettings = openLanguageSettings,
         onRequestPermission = viewModel::requestPermission,
     )
 }

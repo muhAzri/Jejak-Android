@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -42,7 +43,6 @@ import com.muhazri.jejak.core.designsystem.pressable
 import com.muhazri.jejak.core.designsystem.safeArea
 import com.muhazri.jejak.features.onboarding.domain.entities.LocationPermission
 import com.muhazri.jejak.features.settings.domain.entities.DistanceUnit
-import java.util.Locale
 
 @Composable
 fun SettingsScreen(
@@ -52,6 +52,8 @@ fun SettingsScreen(
     unit: DistanceUnit = DistanceUnit.Kilometers,
     onSelectUnit: (DistanceUnit) -> Unit = {},
     onOpenSystemSettings: () -> Unit = {},
+    /** The per-app language picker; separate because it is a different system screen. */
+    onOpenLanguageSettings: () -> Unit = onOpenSystemSettings,
     /** An app that has never asked gets the system dialog; system settings wouldn't list Location yet. */
     onRequestPermission: () -> Unit = {},
 ) {
@@ -88,7 +90,7 @@ fun SettingsScreen(
                     ) {
                         UnitsSection(layout, unit, onSelectUnit)
                         SectionDivider(Modifier.padding(start = 16.dp))
-                        GeneralSection(layout, locationPermission, onOpenSystemSettings, onLocationRow)
+                        GeneralSection(layout, locationPermission, onOpenLanguageSettings, onLocationRow)
                     }
                     Column(
                         Modifier
@@ -109,7 +111,7 @@ fun SettingsScreen(
                 ) {
                     UnitsSection(layout, unit, onSelectUnit)
                     SectionDivider()
-                    GeneralSection(layout, locationPermission, onOpenSystemSettings, onLocationRow)
+                    GeneralSection(layout, locationPermission, onOpenLanguageSettings, onLocationRow)
                     if (layout != ScreenLayout.Compact) SectionDivider()
                     AboutSection(layout)
                 }
@@ -173,17 +175,21 @@ private fun UnitsSection(layout: ScreenLayout, unit: DistanceUnit, onSelect: (Di
 }
 
 /**
- * Language and location are owned by the system, so both rows open the app's page in Settings
- * (location asks in-app first if it never has).
+ * Language and location are owned by the system. Language opens the per-app language picker
+ * (Android 13+), and location opens the app's settings page — or asks in-app if it never has.
  */
 @Composable
 private fun GeneralSection(
     layout: ScreenLayout,
     permission: LocationPermission,
-    onOpenSystemSettings: () -> Unit,
+    onLanguageRow: () -> Unit,
     onLocationRow: () -> Unit,
 ) {
-    val language = remember { Locale.getDefault().displayLanguage }
+    val locale = LocalResources.current.configuration.locales[0]
+    // Named in its own language, as iOS does: "Indonesia", "English".
+    val language = remember(locale) {
+        locale.getDisplayLanguage(locale).replaceFirstChar { it.uppercase(locale) }
+    }
     Column(Modifier.padding(bottom = if (layout == ScreenLayout.Regular) 8.dp else 4.dp)) {
         SectionTitle(stringResource(R.string.settings_general_section), layout)
         SettingsRow(
@@ -191,7 +197,7 @@ private fun GeneralSection(
             title = stringResource(R.string.settings_language),
             value = language,
             layout = layout,
-            onClick = onOpenSystemSettings,
+            onClick = onLanguageRow,
         )
         SettingsRow(
             icon = HeroIcon.MapPin,

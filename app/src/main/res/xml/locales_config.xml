@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The languages Jejak ships, so Android 13+ offers a per-app language picker like iOS does.
+    Indonesian keeps the legacy "in" code that Android resources use.
+-->
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <locale android:name="en" />
+    <locale android:name="in" />
+</locale-config>
