@@ -1,5 +1,6 @@
 package com.muhazri.jejak.core.map
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.GestureDetector
 import android.graphics.ColorMatrix
@@ -95,7 +96,8 @@ private class StaticMapView(context: Context) : MapView(context) {
             override fun onDown(event: MotionEvent) = true
 
             override fun onSingleTapUp(event: MotionEvent): Boolean {
-                onTap?.invoke()
+                // Through performClick, so accessibility services can trigger the same action.
+                performClick()
                 return true
             }
         },
@@ -104,9 +106,19 @@ private class StaticMapView(context: Context) : MapView(context) {
     /**
      * Never pans or zooms — `super.onTouchEvent` is deliberately not called. A tap goes to [onTap];
      * with nothing to tap the map declines the gesture outright so a drag scrolls the page.
+     *
+     * Suppressed because lint only recognises a literal `performClick()` call in this method: the
+     * click does go through [performClick], but by way of the detector that tells a tap from a drag.
      */
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean =
         onTap != null && taps.onTouchEvent(event)
+
+    override fun performClick(): Boolean {
+        super.performClick()
+        onTap?.invoke()
+        return true
+    }
 }
 
 /**
