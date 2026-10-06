@@ -109,4 +109,9 @@
     <string name="permission_once">Once</string>
     <string name="permission_off">Off</string>
     <string name="permission_not_set">Not Set</string>
+
+    <!-- The ongoing notification that keeps a session recording with the screen off. -->
+    <string name="session_notification_channel">Session Recording</string>
+    <string name="session_notification_title">Recording your session</string>
+    <string name="session_notification_message">Jejak is tracking your route.</string>
 </resources>
