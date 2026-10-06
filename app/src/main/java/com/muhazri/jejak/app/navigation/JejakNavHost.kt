@@ -7,24 +7,26 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.muhazri.jejak.features.home.presentation.screens.HomeScreen
-import com.muhazri.jejak.features.onboarding.presentation.screens.OnboardingScreen
-import com.muhazri.jejak.features.session.presentation.screens.ActiveSessionScreen
-import com.muhazri.jejak.features.session.presentation.screens.SessionDetailScreen
-import com.muhazri.jejak.features.settings.presentation.screens.SettingsScreen
+import com.muhazri.jejak.features.home.presentation.screens.HomeRoute
+import com.muhazri.jejak.features.onboarding.presentation.screens.OnboardingRoute
+import com.muhazri.jejak.features.session.presentation.screens.ActiveSessionRoute
+import com.muhazri.jejak.features.session.presentation.screens.SessionDetailRoute
+import com.muhazri.jejak.features.settings.presentation.screens.SettingsRoute
 
 @Composable
 fun JejakNavHost(
+    /** Onboarding is only shown until it has been completed once. */
+    isOnboardingCompleted: Boolean,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
 ) {
     NavHost(
         navController = navController,
-        startDestination = Route.Onboarding,
+        startDestination = if (isOnboardingCompleted) Route.Home else Route.Onboarding,
         modifier = modifier,
     ) {
         composable<Route.Onboarding> {
-            OnboardingScreen(
+            OnboardingRoute(
                 onFinish = {
                     navController.navigate(Route.Home) {
                         popUpTo<Route.Onboarding> { inclusive = true }
@@ -34,26 +36,29 @@ fun JejakNavHost(
         }
 
         composable<Route.Home> {
-            HomeScreen(
+            HomeRoute(
                 onOpenSettings = { navController.navigate(Route.Settings) },
                 onStartActivity = { navController.navigate(Route.ActiveSession(it)) },
-                onOpenLastSession = { navController.navigate(Route.SessionDetail) },
+                onOpenSessionDetail = { navController.navigate(Route.SessionDetail(it)) },
             )
         }
 
         composable<Route.Settings> {
-            SettingsScreen(onBack = navController::popBackStack)
+            SettingsRoute(onBack = navController::popBackStack)
         }
 
         composable<Route.ActiveSession> { entry ->
-            ActiveSessionScreen(
+            ActiveSessionRoute(
                 activity = entry.toRoute<Route.ActiveSession>().activity,
                 onClose = navController::popBackStack,
             )
         }
 
-        composable<Route.SessionDetail> {
-            SessionDetailScreen(onBack = navController::popBackStack)
+        composable<Route.SessionDetail> { entry ->
+            SessionDetailRoute(
+                sessionId = entry.toRoute<Route.SessionDetail>().sessionId,
+                onBack = navController::popBackStack,
+            )
         }
     }
 }

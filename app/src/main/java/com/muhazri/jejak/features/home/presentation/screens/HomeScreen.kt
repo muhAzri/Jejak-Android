@@ -77,7 +77,9 @@ fun HomeScreen(
     permission: LocationPermission = LocationPermission.WhenInUse,
     lastSession: SessionSummary? = null,
     unit: DistanceUnit = DistanceUnit.Kilometers,
+    isRequestingPermission: Boolean = false,
     onOpenSystemSettings: () -> Unit = {},
+    onRequestPermission: () -> Unit = {},
 ) {
     val colors = JejakTheme.colors
     val insets = safeArea()
@@ -94,7 +96,8 @@ fun HomeScreen(
      * "Last Session". The open fold has room for both, unless location is off.
      */
     val showsLastSession = notice == HomeNotice.None || notice == HomeNotice.LocationNotRequested
-    val canStart = permission.isGranted || permission == LocationPermission.AllowedOnce
+    // Only an outright denial locks the cards: tapping one otherwise brings up the system dialog.
+    val canStart = permission != LocationPermission.Denied
 
     val state = HomeState(
         notice = notice,
@@ -102,10 +105,12 @@ fun HomeScreen(
         unit = unit,
         canStart = canStart,
         showsLastSession = showsLastSession,
+        isRequestingPermission = isRequestingPermission,
         onStartActivity = onStartActivity,
         onOpenLastSession = onOpenLastSession,
         onOpenSettings = onOpenSettings,
         onOpenSystemSettings = onOpenSystemSettings,
+        onRequestPermission = onRequestPermission,
         onDismissOnceNotice = { isOnceNoticeDismissed = true },
     )
 
@@ -141,10 +146,12 @@ private class HomeState(
     val unit: DistanceUnit,
     val canStart: Boolean,
     val showsLastSession: Boolean,
+    val isRequestingPermission: Boolean,
     val onStartActivity: (ActivityType) -> Unit,
     val onOpenLastSession: (SessionSummary) -> Unit,
     val onOpenSettings: () -> Unit,
     val onOpenSystemSettings: () -> Unit,
+    val onRequestPermission: () -> Unit,
     val onDismissOnceNotice: () -> Unit,
 )
 
@@ -285,8 +292,11 @@ private fun Header(onOpenSettings: () -> Unit, titleSize: Int, modifier: Modifie
 private fun Notice(state: HomeState, layout: ScreenLayout, modifier: Modifier = Modifier) {
     when (state.notice) {
         HomeNotice.None -> Unit
-        HomeNotice.LocationNotRequested ->
-            LocationNotRequestedNotice(isRequesting = false, onAllow = {}, modifier = modifier)
+        HomeNotice.LocationNotRequested -> LocationNotRequestedNotice(
+            isRequesting = state.isRequestingPermission,
+            onAllow = state.onRequestPermission,
+            modifier = modifier,
+        )
 
         HomeNotice.LocationDenied ->
             LocationDeniedNotice(layout, state.onOpenSystemSettings, modifier)

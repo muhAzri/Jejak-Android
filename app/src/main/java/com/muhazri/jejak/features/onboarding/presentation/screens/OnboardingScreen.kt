@@ -44,7 +44,15 @@ import com.muhazri.jejak.features.onboarding.presentation.components.OnboardingP
 enum class OnboardingStep { Intro, Privacy, Location }
 
 @Composable
-fun OnboardingScreen(onFinish: () -> Unit, modifier: Modifier = Modifier) {
+fun OnboardingScreen(
+    onFinish: () -> Unit,
+    modifier: Modifier = Modifier,
+    isRequestingPermission: Boolean = false,
+    /** "Allow Location" shows the system dialog; onboarding finishes whatever it answers. */
+    onAllowLocation: () -> Unit = onFinish,
+    /** "Not Now" finishes without asking; Home offers the dialog again from its own notice. */
+    onLater: () -> Unit = onFinish,
+) {
     val colors = JejakTheme.colors
     val insets = safeArea()
     var step by rememberSaveable { mutableStateOf(OnboardingStep.Intro) }
@@ -78,7 +86,11 @@ fun OnboardingScreen(onFinish: () -> Unit, modifier: Modifier = Modifier) {
                     onSkip = { step = OnboardingStep.Location },
                 )
 
-                OnboardingStep.Location -> LocationPage(onAllow = onFinish, onLater = onFinish)
+                OnboardingStep.Location -> LocationPage(
+                    isRequesting = isRequestingPermission,
+                    onAllow = onAllowLocation,
+                    onLater = onLater,
+                )
             }
         }
     }
@@ -227,7 +239,7 @@ private fun PrivacyRow(icon: HeroIcon, text: String, layout: ScreenLayout) {
 }
 
 @Composable
-private fun LocationPage(onAllow: () -> Unit, onLater: () -> Unit) {
+private fun LocationPage(isRequesting: Boolean, onAllow: () -> Unit, onLater: () -> Unit) {
     val colors = JejakTheme.colors
     OnboardingPage(
         stepIndex = OnboardingStep.Location.ordinal,
@@ -274,7 +286,11 @@ private fun LocationPage(onAllow: () -> Unit, onLater: () -> Unit) {
             }
         },
         actions = {
-            PrimaryButton(stringResource(R.string.onboarding_location_allow), onAllow)
+            PrimaryButton(
+                text = stringResource(R.string.onboarding_location_allow),
+                onClick = onAllow,
+                enabled = !isRequesting,
+            )
             TextActionButton(stringResource(R.string.onboarding_location_later), onLater)
         },
     )

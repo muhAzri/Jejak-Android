@@ -22,5 +22,5 @@ sealed interface Route {
 
     /** A saved session, opened from Home's "Last Session". */
     @Serializable
-    data object SessionDetail : Route
+    data class SessionDetail(val sessionId: String) : Route
 }

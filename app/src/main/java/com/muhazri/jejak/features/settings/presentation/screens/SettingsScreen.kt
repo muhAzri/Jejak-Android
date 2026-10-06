@@ -20,11 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -53,11 +49,19 @@ fun SettingsScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
     locationPermission: LocationPermission = LocationPermission.WhenInUse,
+    unit: DistanceUnit = DistanceUnit.Kilometers,
+    onSelectUnit: (DistanceUnit) -> Unit = {},
     onOpenSystemSettings: () -> Unit = {},
+    /** An app that has never asked gets the system dialog; system settings wouldn't list Location yet. */
+    onRequestPermission: () -> Unit = {},
 ) {
     val colors = JejakTheme.colors
     val insets = safeArea()
-    var unit by rememberSaveable { mutableStateOf(DistanceUnit.Kilometers) }
+    val onLocationRow = if (locationPermission == LocationPermission.NotDetermined) {
+        onRequestPermission
+    } else {
+        onOpenSystemSettings
+    }
 
     BoxWithConstraints(modifier.fillMaxSize().background(colors.surface)) {
         val layout = ScreenLayout.of(DpSize(maxWidth, maxHeight))
@@ -82,9 +86,9 @@ fun SettingsScreen(
                             .verticalScroll(rememberScrollState())
                             .padding(start = insets.leading, end = 16.dp),
                     ) {
-                        UnitsSection(layout, unit) { unit = it }
+                        UnitsSection(layout, unit, onSelectUnit)
                         SectionDivider(Modifier.padding(start = 16.dp))
-                        GeneralSection(layout, locationPermission, onOpenSystemSettings)
+                        GeneralSection(layout, locationPermission, onOpenSystemSettings, onLocationRow)
                     }
                     Column(
                         Modifier
@@ -103,9 +107,9 @@ fun SettingsScreen(
                         .verticalScroll(rememberScrollState())
                         .padding(start = insets.leading, end = insets.trailing),
                 ) {
-                    UnitsSection(layout, unit) { unit = it }
+                    UnitsSection(layout, unit, onSelectUnit)
                     SectionDivider()
-                    GeneralSection(layout, locationPermission, onOpenSystemSettings)
+                    GeneralSection(layout, locationPermission, onOpenSystemSettings, onLocationRow)
                     if (layout != ScreenLayout.Compact) SectionDivider()
                     AboutSection(layout)
                 }
@@ -177,6 +181,7 @@ private fun GeneralSection(
     layout: ScreenLayout,
     permission: LocationPermission,
     onOpenSystemSettings: () -> Unit,
+    onLocationRow: () -> Unit,
 ) {
     val language = remember { Locale.getDefault().displayLanguage }
     Column(Modifier.padding(bottom = if (layout == ScreenLayout.Regular) 8.dp else 4.dp)) {
@@ -193,7 +198,7 @@ private fun GeneralSection(
             title = stringResource(R.string.settings_location_access),
             value = stringResource(permission.settingsLabelRes),
             layout = layout,
-            onClick = onOpenSystemSettings,
+            onClick = onLocationRow,
         )
     }
 }
