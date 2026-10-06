@@ -28,9 +28,12 @@ android {
         }
         release {
             buildConfigField("String", "BASE_URL", "\"https://api.example.com/\"")
-            optimization {
-                enable = false
-            }
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
         }
     }
     compileOptions {
