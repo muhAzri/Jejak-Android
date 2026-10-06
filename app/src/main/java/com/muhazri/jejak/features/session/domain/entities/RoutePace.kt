@@ -11,11 +11,14 @@ import kotlin.math.sqrt
 object Geo {
     private const val EARTH_RADIUS = 6_371_000.0
 
-    fun distance(a: RoutePoint, b: RoutePoint): Double {
-        val lat1 = Math.toRadians(a.latitude)
-        val lat2 = Math.toRadians(b.latitude)
+    fun distance(a: RoutePoint, b: RoutePoint): Double =
+        distance(a.latitude, a.longitude, b.latitude, b.longitude)
+
+    fun distance(lat1Degrees: Double, lon1Degrees: Double, lat2Degrees: Double, lon2Degrees: Double): Double {
+        val lat1 = Math.toRadians(lat1Degrees)
+        val lat2 = Math.toRadians(lat2Degrees)
         val dLat = lat2 - lat1
-        val dLon = Math.toRadians(b.longitude - a.longitude)
+        val dLon = Math.toRadians(lon2Degrees - lon1Degrees)
         val h = sin(dLat / 2).pow(2) + cos(lat1) * cos(lat2) * sin(dLon / 2).pow(2)
         return 2 * EARTH_RADIUS * asin(sqrt(h.coerceIn(0.0, 1.0)))
     }
@@ -26,6 +29,22 @@ data class PaceExtremes(val fastest: Double, val slowest: Double)
 
 /** Pace along a route, in seconds per meter. Only measured within a segment, so pauses never count. */
 object RoutePace {
+
+    /** Current pace: the last [windowSeconds] of the latest segment. Null while standing still. */
+    fun recent(route: List<RoutePoint>, windowSeconds: Double = 30.0, minDistance: Double = 15.0): Double? {
+        val last = route.lastOrNull() ?: return null
+        var distance = 0.0
+        var first = last
+        for (index in route.lastIndex - 1 downTo 0) {
+            val point = route[index]
+            if (point.segment != last.segment) break
+            if ((last.timestamp - point.timestamp) / 1_000.0 > windowSeconds) break
+            distance += Geo.distance(point, first)
+            first = point
+        }
+        val elapsed = (last.timestamp - first.timestamp) / 1_000.0
+        return if (distance >= minDistance && elapsed > 0) elapsed / distance else null
+    }
 
     /** Pace at each point, over the stretch of [span] meters ending there. Null until a segment covers [span]. */
     fun perPoint(route: List<RoutePoint>, span: Double = 200.0): List<Double?> {
