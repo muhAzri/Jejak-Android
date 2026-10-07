@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Jejak's mark: the Mochiy "j" with a three-dot trail running into its hook,
+    from section 1d of the F0 design. The glyph is outlined straight from
+    Mochiy Pop One, as the design note asks, rather than redrawn by hand.
+
+    The design is an iOS tile where the mark bleeds to the edges. Android masks
+    an adaptive icon to a 72dp shape, and this mark runs corner to corner on the
+    diagonal, so it is sized by its smallest enclosing circle and centred on it:
+    the largest placement that survives a circular mask whole, with a little air
+    left so it does not kiss the edge.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Themed icons: the system supplies the colour, so this layer is a silhouette. -->
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M67.946 42.114Q67.841 40.804 67.71 38.971Q67.579 37.137 67.579 35.46Q67.579 34.884 67.605 34.282Q67.631 33.679 67.684 33.26L76.747 32.998Q76.747 33.417 76.774 34.675Q76.8 35.932 76.826 37.451Q76.852 38.971 76.905 40.202Q76.957 41.433 76.957 41.852ZM64.645 79.835Q58.778 79.835 55.005 75.958Q51.233 72.081 49.924 64.851L58.778 62.232Q58.778 63.646 59.118 65.218Q59.459 66.79 60.192 68.204Q60.926 69.619 62.026 70.483Q63.126 71.348 64.54 71.348Q66.479 71.348 67.396 70.405Q68.313 69.462 68.522 67.209Q68.627 66.004 68.679 64.458Q68.732 62.913 68.732 61.236Q68.732 58.564 68.627 55.866Q68.522 53.168 68.365 50.916Q68.208 48.663 67.946 47.458L77.114 47.196Q77.166 48.191 77.219 50.418Q77.271 52.644 77.324 55.578Q77.376 58.512 77.376 61.655Q77.376 63.594 77.324 65.532Q77.271 67.471 77.114 69.147Q76.957 70.876 76.25 72.762Q75.542 74.648 74.075 76.246Q72.609 77.844 70.303 78.839Q67.998 79.835 64.645 79.835ZM30.532,73.124a2.807,2.807 0 1,0 5.613,0a2.807,2.807 0 1,0 -5.613,0ZM39.263,77.49a2.807,2.807 0 1,0 5.613,0a2.807,2.807 0 1,0 -5.613,0Z" />
+    <!-- The far dot of the trail fades out, as in the design. -->
+    <path
+        android:fillColor="#FF000000"
+        android:fillAlpha="0.4"
+        android:pathData="M30.532,61.897a2.807,2.807 0 1,0 5.613,0a2.807,2.807 0 1,0 -5.613,0Z" />
+</vector>
