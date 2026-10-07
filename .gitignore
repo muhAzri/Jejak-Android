@@ -13,3 +13,10 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Release signing. The keystore and its passwords never belong in version control:
+# losing the keystore means losing the ability to update the app, and committing it
+# means anyone with the repo can sign as you. Back the .jks up somewhere safe.
+*.jks
+*.keystore
+keystore.properties
